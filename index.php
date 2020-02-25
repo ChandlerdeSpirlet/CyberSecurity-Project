@@ -1,6 +1,13 @@
 <?php
   session_start();
   $conn = pg_connect(getenv("DATABASE_URL"));
+  if (!$conn){
+    die("Connection failed");
+  }
+  $post_query = 'select rand_text from rando_table where unique_id = 1';
+  $result = pg_query($conn, $post_query);
+  $row = pg_fetch_row($result);
+  $text = $row[0];
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,6 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Coding Discussion Board</title>
+    <h3><i>What's this? </i><?php echo $text ?></h3>
     <style>
       table {
         font-family: arial, sans-serif;
