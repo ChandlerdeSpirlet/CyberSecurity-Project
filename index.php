@@ -15,7 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Coding Discussion Board</title>
-    <h3><i>What's this? </i><?php echo $text ?></h3>
+    
     <style>
       table {
         font-family: arial, sans-serif;
@@ -96,6 +96,7 @@
   <div>
   <h1>Coding Discussion Board</h1>
     <p style="font-size: 14pt; "><i>Welcome to the Coding Discussion Board, where you can discuss anything CS related!</i></p>
+    <p><i>What's this? </i><?php echo $text ?></p>
   </div>
 
   <div>
