@@ -127,7 +127,7 @@
                             <td>".$row["userID"]."</td>
                             <td>".$row["user_comment"]."</td>
                         </tr>
-                    </table>"
+                    </table>";
                 }
             } else {
                 echo "<p> Nothing to see yet!</p>";
