@@ -9,6 +9,18 @@
             die();
         }
     }
+    $conn = pg_connect(getenv("DATABASE_URL"));
+    if (!$conn){
+        die("Connection failed");
+    }
+    $post_query = 'select * from checkCreds(?, ?)';
+    $result = pg_query($conn, $post_query, [$_GET["uname"], $_GET["pass"]]);
+    $row = pg_fetch_row($result);
+    $boolRes = $row[0];
+    if ($boolRes != TRUE){
+        header("Location: index.php");
+        die();
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -99,29 +111,30 @@
     <p style="font-style: italic;">Yes, I know this isn't secure, but I'm showing off my PHP skills</p>
     <p style="font-size: 14pt; "><i>Welcome to the Coding Discussion Board, where you can discuss anything CS related!</i></p>
     </div>
-
     <div>
-    <div>
-        <h1 style="color: blue;">Unmodderated Content</h1>
-        <br>
-        <table id="tableOfContent">
-        <tr>
-            <th>Username</th>
-            <th>Discussions</th>
-        </tr>
-        <tr>
-            <td>H4CK3R M4N</td>
-            <td>Everyone knows that DOS was the best... and still is. #IOnlyUseFloppyDisks #UnHackable</td>
-        </tr>
-        <tr>
-            <td>DAEMON HUNTER</td>
-            <td>Hey guys, new to computing, do I need drivers for my drivers?</td>
-        </tr>
-        <tr>
-            <td>Linux is for Winners</td>
-            <td>I think that everyone should use Linux since it's the best. #FACTS</td>
-        </tr>
-        </table>
+        <?php
+            $sql = 'select * from comment';
+            $result = pg_query($conn, $sql);
+            if (pg_numrows($result) > 0){
+                while ($row = pg_fetch_row($result)){
+                    echo 
+                    "<table id=\"tableOfContent\">
+                        <tr>
+                            <th>Username</th>
+                            <th>Comment</th>
+                        </tr>
+                        <tr>
+                            <td>".$row["userID"]."</td>
+                            <td>".$row["user_comment"]."</td>
+                        </tr>
+                    </table>"
+                }
+            } else {
+                echo "<p> Nothing to see yet!</p>";
+            }
+            pg_close($conn);
+        ?>
+    </div>
         <br>
         <form name="Add Content" onsubmit="return addToTable()">
             <label>Enter your username: </label><input type="text" name="username"></input><br>
