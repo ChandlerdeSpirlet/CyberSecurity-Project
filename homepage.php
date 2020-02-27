@@ -116,7 +116,8 @@
             $sql = 'select * from comment';
             $result = pg_query($conn, $sql);
             if (pg_numrows($result) > 0){
-                while ($row = pg_fetch_all($result)){
+                while ($row = pg_fetch_row($result)){
+                    print($row);
                     echo 
                     "<table id=\"tableOfContent\">
                         <tr>
