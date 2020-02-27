@@ -15,9 +15,9 @@
     }
     $post_query = 'select * from checkCreds(?, ?)';
     $result = pg_query_params($conn, $post_query, [$_GET["uname"], $_GET["pass"]]);
-    $row = pg_fetch_row($result);
+    print($result);
     $boolRes = $row[0];
-    if ($boolRes != TRUE){
+    if ($result != TRUE){
         header("Location: index.php");
         die();
     }
