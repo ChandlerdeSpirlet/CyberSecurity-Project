@@ -14,7 +14,7 @@
         die("Connection failed");
     }
     $post_query = 'select * from checkCreds(?, ?)';
-    $result = pg_query($conn, $post_query, [$_GET["uname"], $_GET["pass"]]);
+    $result = pg_query_params($conn, $post_query, [$_GET["uname"], $_GET["pass"]]);
     $row = pg_fetch_row($result);
     $boolRes = $row[0];
     if ($boolRes != TRUE){
