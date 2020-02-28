@@ -15,7 +15,6 @@
     }
     $post_query = 'select * from checkcreds($1, $2)';
     $result = pg_query_params($conn, $post_query, [$_GET["uname"], $_GET["pass"]]);
-    print($result);
     $boolRes = $row[0];
     if ($result != TRUE){
         header("Location: index.php");
@@ -117,8 +116,6 @@
             $result = pg_query($conn, $sql);
             if (pg_numrows($result) > 0){
                 while ($row = pg_fetch_row($result)){
-                    print($row);
-                    echo 
                     "<table id=\"tableOfContent\">
                         <tr>
                             <th>Username</th>
